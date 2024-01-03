@@ -1,0 +1,10 @@
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #282c34;
+    color: orange;
+    font-family: 'Arial', sans-serif;
+    font-size: 2rem;
+    height: 60px;
+}

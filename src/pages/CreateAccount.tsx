@@ -1,5 +1,7 @@
-import React, {useState} from "react";
-import axios from "axios";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+
 
 interface CreateAccountProps {
   onAccountCreated: () => void;
@@ -18,10 +20,12 @@ const CreateAccount: React.FC<CreateAccountProps> = ({onAccountCreated}) => {
         password: '',
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target;
-        setUserData((prevData) => ({...prevData, [name]: value}));
-    };
+    let navigate = useNavigate();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUserData((prevData) => ({ ...prevData, [name]: value }));
+  };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -29,9 +33,14 @@ const CreateAccount: React.FC<CreateAccountProps> = ({onAccountCreated}) => {
         try {
             const response = await axios.post('http://localhost:8080/api/v0/account', userData);
             console.log('Account created: ', response.data);
+
+            // Trigger the provided callback
             onAccountCreated();
+
+            // Redirect to the success page
+            navigate('/success');
         } catch (error){
-            console.error(error);
+            console.error('Error creating account:', error);
         }
     };
 

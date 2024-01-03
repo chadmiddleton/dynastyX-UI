@@ -1,31 +1,42 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import CreateAccount from "./components/CreateAccount";
+import CreateAccount from "./pages/CreateAccount";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import SuccessPage from "./pages/SuccessPage";
+import ToolbarWithMenu from "./components/Toolbar";
+import LeaguePage from "./pages/LeaguePage";
+import TeamPage from "./pages/TeamPage";
+import AccountPage from "./pages/AccountPage";
+
+import './styles/HeaderStyles.css'
+import LoginPage from "./pages/LoginPage";
 
 const App: React.FC = () => {
     const handleAccountCreated = () => {
         console.log('Account created!');
     }
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-                <CreateAccount onAccountCreated={handleAccountCreated}/>
-            </header>
-        </div>
-    );
+        <Router>
+            <div>
+                {/* Title Header */}
+                <div className="header">DynastyX</div>
+
+                {/* Toolbar */}
+                <ToolbarWithMenu/>
+
+                {/* Routes */}
+                <Routes>
+                    <Route path="/login" element={<LoginPage/>}/>
+                    <Route path="/create-account" element={<CreateAccount onAccountCreated={handleAccountCreated}/>}/>
+                    <Route path="/success" element={<SuccessPage/>}/>
+                    <Route path="/league" element={<LeaguePage/>}/>
+                    <Route path="/team/:teamId" element={<TeamPage/>}/>
+                    <Route path="/account" element={<AccountPage/>}/>
+                </Routes>
+            </div>
+        </Router>
+    )
+        ;
 }
 
 export default App;
